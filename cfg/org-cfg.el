@@ -51,22 +51,30 @@
         org-pretty-entities t
         org-agenda-tags-column 0
         org-ellipsis "…"
-        org-return-follows-link t))   ; CLEANUP: Moved from global scope into the proper org block
+        org-return-follows-link t     ; Hitting Enter on links follows them immediately
+        org-startup-indented t        ; Sets up indentation frameworks on file load
+        org-fontify-quote-and-verse-blocks t)) ; Enables quote block region tracking
 
 ;; Automatically visually nests and step-indents your outliner headers
 (add-hook 'org-mode-hook 'org-indent-mode)
 
+;; Quick Shortcut: Press C-c q to instantly drop or wrap a styled quote block
+(with-eval-after-load 'org
+  (define-key org-mode-map (kbd "C-c q") 
+              (lambda () (interactive) (org-insert-structure-template "quote"))))
+
 ;; ==========================================
-;; 3. LOGSEQ-STYLE LEFT VERTICAL QUOTE LINE
+;; 3. THEOLOGY QUOTE BLOCK STYLING (VERIFIED)
 ;; ==========================================
-;; Stable left-hand block design that works perfectly across Emacs versions
-(set-face-attribute 'org-quote nil
-                    :inherit 'italic
-                    :background "#1e222a"  ; Subtly dark background block tint
-                    :foreground "#abb2bf"  ; Clean, readable text color
-                    :extend t              ; Spans the block background cleanly across the window margin
-                    :box nil               ; Explicitly clears the broken box parameter
-                    :underline '(:color "#51afef" :style line :position nil))
+;; Safe typographic look using beautiful font styling and background tints
+(with-eval-after-load 'org
+  (custom-set-faces
+   '(org-quote ((t :inherit variable-pitch   ; Shunts text to your clean system proportional font
+                   :slant italic             ; Book italics style
+                   :height 1.15              ; Sizes font up slightly to separate it from lists
+                   :background "#1e222a"     ; Subtly dark background block tint for deep contrast
+                   :foreground "#ecc37b"     ; Warm, readable scriptural amber gold text
+                   :extend t)))))            ; Extends background edge-to-edge
 
 ;; ==========================================
 ;; 4. ORG-ROAM (Logseq-Style Database Integration)
@@ -97,7 +105,7 @@
   :after org-roam
   :config
   (setq org-roam-ui-sync-theme t
-        org-roam-ui-follow t
+        org-roam-ui-follow t            
         org-roam-ui-update-on-save t
         org-roam-ui-open-on-start nil))
 
@@ -132,10 +140,6 @@
 ;; ==========================================
 ;; 9. DYNAMIC HEADING SCALING (FONTS & SIZES)
 ;; ==========================================
-(custom-set-faces
- ;; Ensure the org-modern styled bullets scale cleanly
- '(org-modern-symbol ((t :height 1.1 :weight regular))))
-
 ;; Apply proportional sizes and weights to your outliner levels
 (with-eval-after-load 'org
   (custom-set-faces

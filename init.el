@@ -7,8 +7,7 @@
 
 ;; Initialize the package manager with correct repository paths
 (require 'package)
-(add-to-list 'package-archives
-             '("melpa" . "http://melpa.org/packages/") t)
+(add-to-list 'package-archives '("melpa" . "https://melpa.org") t)
 (add-to-list 'package-archives '("gnu" . "https://gnu.org") t)
 (package-initialize)
 
@@ -27,7 +26,7 @@ Defaults to `user-init-file` (~/.config/emacs/init.el) if FILE-PATH is not provi
   (let ((target-file (or file-path user-init-file)))
     (find-file target-file)))
 
-;; Bind it to your key combination exactly as before
+;; Global quick-access hotkeys
 (global-set-key (kbd "C-c e i") #'open-my-init-file)
 (global-set-key (kbd "C-c e o") (lambda () (interactive) (open-my-init-file "~/Documents/org/main.org")))
 
@@ -47,17 +46,14 @@ Defaults to `user-init-file` (~/.config/emacs/init.el) if FILE-PATH is not provi
       read-buffer-completion-ignore-case t     ; Case-insensitive buffer names
       completion-ignore-case t)                 ; Case-insensitive general prompts
 
-
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
  '(package-selected-packages
    '(multiple-cursors org-roam projectile vertico zenburn-theme)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
+ '(org-level-1 ((t :height 1.35 :weight bold :foreground "#51afef")))
+ '(org-level-2 ((t :height 1.2 :weight bold :foreground "#98be65")))
+ '(org-level-3 ((t :height 1.1 :weight semi-bold :foreground "#c678dd")))
+ '(org-level-4 ((t :height 1.0 :weight regular :foreground "#da8548")))
  '(org-modern-symbol ((t :height 1.1 :weight regular)) t))
