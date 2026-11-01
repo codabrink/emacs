@@ -1,9 +1,12 @@
 ;; -*- lexical-binding: t; -*-
 
+
+;; Visual tweaks
 (setq warning-minimum-level :error)
 (menu-bar-mode -1)
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
+(global-visual-line-mode t) ;; Line wrap.
 
 ;; Initialize the package manager with correct repository paths
 (require 'package)
@@ -21,7 +24,7 @@
 (require 'use-package)
 (setq use-package-always-ensure t)
 
-(defun open-my-init-file (&optional file-path)
+(defun open-my-file (&optional file-path)
   "Instantly opens an initialization file. 
 Defaults to `user-init-file` (~/.config/emacs/init.el) if FILE-PATH is not provided."
   (interactive)
@@ -29,8 +32,8 @@ Defaults to `user-init-file` (~/.config/emacs/init.el) if FILE-PATH is not provi
     (find-file target-file)))
 
 ;; Global quick-access hotkeys
-(global-set-key (kbd "C-c e i") #'open-my-init-file)
-(global-set-key (kbd "C-c e o") (lambda () (interactive) (open-my-init-file "~/Documents/org/main.org")))
+(global-set-key (kbd "C-c e i") #'open-my-file)
+(global-set-key (kbd "C-c e o") (lambda () (interactive) (open-my-file "~/Documents/org/main.org")))
 
 ;; Add the custom config directory to Emacs's search path
 (add-to-list 'load-path (expand-file-name "cfg" user-emacs-directory))
