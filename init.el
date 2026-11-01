@@ -43,6 +43,7 @@ Defaults to `user-init-file` (~/.config/emacs/init.el) if FILE-PATH is not provi
 (load "org-cfg" :noerror)
 (load "mc-cfg" :noerror)
 (load "vertico-cfg" :noerror)
+(load "rust-cfg" :noerror)
 
 (use-package projectile)
 
