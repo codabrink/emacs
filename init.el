@@ -7,8 +7,10 @@
 
 ;; Initialize the package manager with correct repository paths
 (require 'package)
-(add-to-list 'package-archives '("melpa" . "https://melpa.org") t)
-(add-to-list 'package-archives '("gnu" . "https://gnu.org") t)
+(setq package-archives
+      '(("gnu"    . "https://elpa.gnu.org/packages/")
+        ("nongnu" . "https://elpa.nongnu.org/nongnu/")
+        ("melpa"  . "https://melpa.org/packages/")))
 (package-initialize)
 
 ;; Fetch the archive description if it's missing
@@ -48,12 +50,19 @@ Defaults to `user-init-file` (~/.config/emacs/init.el) if FILE-PATH is not provi
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
  '(package-selected-packages
    '(multiple-cursors org-roam projectile vertico zenburn-theme)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
  '(org-level-1 ((t :height 1.35 :weight bold :foreground "#51afef")))
  '(org-level-2 ((t :height 1.2 :weight bold :foreground "#98be65")))
  '(org-level-3 ((t :height 1.1 :weight semi-bold :foreground "#c678dd")))
  '(org-level-4 ((t :height 1.0 :weight regular :foreground "#da8548")))
- '(org-modern-symbol ((t :height 1.1 :weight regular)) t))
+ '(org-modern-symbol ((t :height 1.1 :weight regular)) t)
+ '(org-quote ((t :inherit variable-pitch :slant italic :height 1.15 :background "#1e222a" :foreground "#ecc37b" :extend t))))
