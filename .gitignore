@@ -1,1 +1,10 @@
 *~
+
+# Installed or compiled by Emacs
+elpa/
+eln-cache/
+tree-sitter/
+
+# Personal data generated from notes
+org-roam.db
+.org-id-locations

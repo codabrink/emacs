@@ -1,6 +1,5 @@
 ;; -*- lexical-binding: t; -*-
 
-
 ;; Visual tweaks
 (setq warning-minimum-level :error)
 (menu-bar-mode -1)
@@ -59,7 +58,7 @@ Defaults to `user-init-file` (~/.config/emacs/init.el) if FILE-PATH is not provi
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(multiple-cursors org-roam projectile vertico zenburn-theme))
+   '(corfu multiple-cursors org-roam projectile vertico zenburn-theme))
  '(package-vc-selected-packages
    '((roam-block :url "https://github.com/Kinneyzhang/roam-block"))))
 (custom-set-faces

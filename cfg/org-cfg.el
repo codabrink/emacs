@@ -153,23 +153,25 @@
    '(org-level-4 ((t :height 1.00 :weight regular :foreground "#da8548"))))) ; Deep Node (Text Size)
 
 ;; ==========================================
-;; 10. ROAM-BLOCK (Failsafe Direct GitHub Fetch)
+;; 10. BLOCK LINKS & EMBEDS
 ;; ==========================================
-;; Safely clones and provisions roam-block without breaking the rest of your system
-(let ((roam-block-src-dir (expand-file-name "~/.emacs.d/straight/repos/roam-block/")))
-  ;; If the folder doesn't exist, safely make it and clone it via standard Git
-  (unless (file-directory-p roam-block-src-dir)
-    (make-directory (file-name-directory roam-block-src-dir) t)
-    (shell-command (concat "git clone https://github.com " 
-                           (shell-quote-argument roam-block-src-dir))))
-  
-  ;; Safely inject into load path and load if the files downloaded successfully
-  (when (file-exists-p (expand-file-name "roam-block.el" roam-block-src-dir))
-    (add-to-list 'load-path roam-block-src-dir)
-    (require 'roam-block)
-    (roam-block-mode 1)
-    (setq roam-block-home (list (expand-file-name "~/Documents/org/roam"))
-          roam-block-ref-highlight t
-          roam-block-embed-highlight t)
-    (global-set-key (kbd "C-c b s") #'roam-block-ref-store)
-    (global-set-key (kbd "C-c b i") #'roam-block-ref-insert)))
+;; Store a link to the current heading (creates an ID via `org-id-link-to-org-use-id')
+(global-set-key (kbd "C-c l") #'org-store-link)
+
+;; Show the target of a #+transclude: line inline; only that line is saved to the file
+(use-package org-transclusion
+  :ensure t
+  :after org
+  :bind (:map org-mode-map
+              ("C-c n t" . org-transclusion-add)))
+
+;; ==========================================
+;; 11. ORG-TIDY (Hide Property Drawers)
+;; ==========================================
+;; Display only: drawers stay in the file. M-x org-tidy-toggle reveals them.
+(use-package org-tidy
+  :ensure t
+  :hook (org-mode . org-tidy-mode)
+  :config
+  (setq org-tidy-properties-style 'inline
+        org-tidy-properties-inline-symbol "·"))

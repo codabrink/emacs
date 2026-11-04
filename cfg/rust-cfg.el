@@ -55,7 +55,7 @@
   :config
   ;; Tell Emacs where to download the C sources for compilation
   (setq treesit-language-source-alist
-        '((rust "https://github.com")))
+        '((rust "https://github.com/tree-sitter/tree-sitter-rust")))
 
   ;; Automatically download and compile the grammar if it's missing
   (unless (treesit-ready-p 'rust)
