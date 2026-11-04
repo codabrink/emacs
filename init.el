@@ -7,6 +7,7 @@
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
 (global-visual-line-mode t) ;; Line wrap.
+(pixel-scroll-precision-mode +1)
 
 ;; Initialize the package manager with correct repository paths
 (require 'package)
@@ -58,7 +59,9 @@ Defaults to `user-init-file` (~/.config/emacs/init.el) if FILE-PATH is not provi
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(multiple-cursors org-roam projectile vertico zenburn-theme)))
+   '(multiple-cursors org-roam projectile vertico zenburn-theme))
+ '(package-vc-selected-packages
+   '((roam-block :url "https://github.com/Kinneyzhang/roam-block"))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

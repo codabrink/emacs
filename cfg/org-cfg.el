@@ -53,7 +53,11 @@
         org-ellipsis "…"
         org-return-follows-link t     ; Hitting Enter on links follows them immediately
         org-startup-indented t        ; Sets up indentation frameworks on file load
-        org-fontify-quote-and-verse-blocks t)) ; Enables quote block region tracking
+        org-fontify-quote-and-verse-blocks t
+        
+        ;; OPTIMIZATION: Silently auto-create & insert unique IDs on any headline 
+        ;; when using standard org-store-link (C-c l) / org-insert-link (C-c C-l)
+        org-id-link-to-org-use-id t))
 
 ;; Automatically visually nests and step-indents your outliner headers
 (add-hook 'org-mode-hook 'org-indent-mode)
@@ -82,13 +86,13 @@
 (use-package org-roam
   :ensure t
   :init
-  ;; Automatically create the folder path safely before the package config executes
+  ;; Create the folder path safely before the package config executes
   (let ((roam-dir (expand-file-name "~/Documents/org/roam")))
     (unless (file-directory-p roam-dir)
       (make-directory roam-dir t)))
   :custom
-  ;; Pointed directly to your custom org folder
-  (org-roam-directory (expand-file-name "~/Documents/org/roam"))
+  ;; Reverted back to your working custom string block setup
+  (org-roam-directory "~/Documents/org/roam")
   (org-roam-verbose nil)
   :bind (("C-c n f" . org-roam-node-find)   ; Find or Create a page
          ("C-c n i" . org-roam-node-insert) ; Link a page inline
@@ -147,3 +151,25 @@
    '(org-level-2 ((t :height 1.20 :weight bold :foreground "#98be65")))    ; Sub-Node
    '(org-level-3 ((t :height 1.10 :weight semi-bold :foreground "#c678dd"))) ; Detail Node
    '(org-level-4 ((t :height 1.00 :weight regular :foreground "#da8548"))))) ; Deep Node (Text Size)
+
+;; ==========================================
+;; 10. ROAM-BLOCK (Failsafe Direct GitHub Fetch)
+;; ==========================================
+;; Safely clones and provisions roam-block without breaking the rest of your system
+(let ((roam-block-src-dir (expand-file-name "~/.emacs.d/straight/repos/roam-block/")))
+  ;; If the folder doesn't exist, safely make it and clone it via standard Git
+  (unless (file-directory-p roam-block-src-dir)
+    (make-directory (file-name-directory roam-block-src-dir) t)
+    (shell-command (concat "git clone https://github.com " 
+                           (shell-quote-argument roam-block-src-dir))))
+  
+  ;; Safely inject into load path and load if the files downloaded successfully
+  (when (file-exists-p (expand-file-name "roam-block.el" roam-block-src-dir))
+    (add-to-list 'load-path roam-block-src-dir)
+    (require 'roam-block)
+    (roam-block-mode 1)
+    (setq roam-block-home (list (expand-file-name "~/Documents/org/roam"))
+          roam-block-ref-highlight t
+          roam-block-embed-highlight t)
+    (global-set-key (kbd "C-c b s") #'roam-block-ref-store)
+    (global-set-key (kbd "C-c b i") #'roam-block-ref-insert)))
